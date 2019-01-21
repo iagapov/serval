@@ -1,6 +1,6 @@
 This project shall exploit
 
-NoSQL DB
-Android apps
+MongoDB
+apps
 web server
 motorized wireless device?
