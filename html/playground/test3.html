@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="Chart.js"></script>
+
+
+<h2>Javascript/JSON</h2>
+
+<p id="demo1"></p>
+<p id="demo2"></p>
+<p id="demo3"></p>
+
+<canvas id="myChart"></canvas>
+
+<script>
+var p = JSON.parse('{"x":2, "name":"John"}')
+document.getElementById("demo1").innerHTML = p.x + " ; " + p.name;
+</script>
+
+<script>
+var p = JSON.parse('{"x":2, "names":["John","Paul","II"]}')
+document.getElementById("demo2").innerHTML = p.names[0];
+</script>
+
+<script>
+
+$.getJSON('http://localhost:8000/polls/18/results/', function(data) {
+     document.getElementById("demo3").innerHTML ="result:" +  data.x;
+
+     var ctx = document.getElementById('myChart').getContext('2d');
+     var chart = new Chart(ctx, {
+         // The type of chart we want to create
+         type: 'line',
+
+         // The data for our dataset
+         data: {
+             labels: data.labels,
+             datasets: [{
+                 label: "Test dataset",
+                 data: data.x,
+             }]
+         },
+
+         // Configuration options go here
+         options: {}
+     });
+
+
+} );
+
+</script>
+
+
+</body>
+</html>

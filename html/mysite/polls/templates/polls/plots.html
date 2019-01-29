@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+
+<script src="http://localhost:8000/static/polls/Chart.js"></script>
+
+<canvas id="myChart"></canvas>
+
+
+{{ question }}
+
+{{ data }}
+
+
+{% for d in data %}
+  {  x: {{ d.x }}, y: {{d.y}} },
+{% endfor %}
+
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'scatter',
+    data: {
+        datasets: [{
+            data: [
+              {% for d in data %}
+                {  x: {{ d.x }}, y: {{d.y}} },
+              {% endfor %}
+            ]
+        }]
+    },
+    options: {yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Value'
+						}
+					}]}
+
+});
+</script>
+
+
+</body>
+</html>
