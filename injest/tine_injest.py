@@ -24,6 +24,7 @@ for ch in temp_channels:
     try:
         h=pt.history(address='/PETRA/HISTORY/keyword',property=ch,depth='2400hours', stop='30.11.2018 13:00:00')
         data[ch] = {'data':h}
+        print('ok')
     except:
         print('No channel data in archive')
 
