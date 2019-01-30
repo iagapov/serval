@@ -19,11 +19,11 @@ data = {}
 d=pt.list(context='PETRA', server='HISTORY')
 temp_channels = [t for t  in d['properties'] if t.lower().find('temp') >= 0]
 
-for i in len(temp_channels):
-    h=pt.history(address='/PETRA/HISTORY/keyword',property=temp_channels[i],depth='2400hours', stop='30.11.2018 13:00:00')
+for ch in temp_channels:
+    h=pt.history(address='/PETRA/HISTORY/keyword',property=ch,depth='2400hours', stop='30.11.2018 13:00:00')
+    data[ch] = {'data':h}
 
-data[temp_channels[i]] = {}
-
+data['tags'] = ['petra','archive','history']
 
 #h=pt.history(address='/PETRA/HISTORY/keyword',property='CurDC',depth='2400hours', stop='30.11.2018 13:00:00')
 
