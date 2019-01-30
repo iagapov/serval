@@ -20,6 +20,7 @@ d=pt.list(context='PETRA', server='HISTORY')
 temp_channels = [t for t  in d['properties'] if t.lower().find('temp') >= 0]
 
 for ch in temp_channels:
+    print('reading channel: ' + ch)
     h=pt.history(address='/PETRA/HISTORY/keyword',property=ch,depth='2400hours', stop='30.11.2018 13:00:00')
     data[ch] = {'data':h}
 
