@@ -27,8 +27,9 @@ for ch in temp_channels[0:3]:
         time.sleep(0.5)
         data[ch] = {'data':h}
         print('ok')
-    except:
+    except Exception as e:
         print('No channel data in archive')
+        print(e)
 
 data['tags'] = ['petra','archive','history']
 
