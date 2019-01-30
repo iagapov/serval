@@ -18,11 +18,12 @@ data = {}
 
 d=pt.list(context='PETRA', server='HISTORY')
 temp_channels = [t for t  in d['properties'] if t.lower().find('temp') >= 0]
-
+import time
 for ch in temp_channels:
     print('reading channel: ' + ch)
     try:
         h=pt.history(address='/PETRA/HISTORY/keyword',property=ch,depth='2400hours', stop='30.11.2018 13:00:00')
+        time.sleep(0.5)
         data[ch] = {'data':h}
         print('ok')
     except:
