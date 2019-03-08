@@ -25,7 +25,7 @@ SECRET_KEY = '!7wpwv%+c7c1aate%)8m5a#p7tj&$ht&vlq4q9r&-5xl%pdy0k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["serval.desy.de"]
 
 
 # Application definition
