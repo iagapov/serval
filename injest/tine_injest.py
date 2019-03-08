@@ -2,7 +2,7 @@
 import PyTine as pt
 from datetime import datetime
 import json
-
+import sys
 
 '''
 # attaching listener
@@ -16,15 +16,23 @@ lid=pt.attach(address='/PETRA/Idc/Buffer-0',property='I',callback=cb)
 
 data = {}
 
-d=pt.list(context='PETRA', server='HISTORY')
-temp_channels = [t for t  in d['properties'] if t.lower().find('temp') >= 0]
+d=pt.list(context='PETRA', server='HISTORY',property='Temps.Magnets')
+#temp_channels = [t for t  in d['properties'] if t.lower().find('temp') >= 0]
+devices = d['devices']
 import time
-for ch in temp_channels[0:3]:
+
+#h=pt.history(address='/PETRA/HISTORY/keyword',property=temp_channels[0],depth='2400hours', stop='30.11.2018 13:00:00')
+#data[temp_channels[0]] = h
+#time.sleep(2)
+#h=pt.history(address='/PETRA/HISTORY/keyword',property=temp_channels[1],depth='2400hours', stop='30.11.2018 13:00:00')
+#data[temp_channels[1]] = h
+
+for ch in devices:
     print('reading channel: ' + ch)
     try:
-        time.sleep(0.5)
-        h=pt.history(address='/PETRA/HISTORY/keyword',property=ch,depth='2400hours', stop='30.11.2018 13:00:00')
-        time.sleep(0.5)
+        time.sleep(0.1)
+        h=pt.history(address='/PETRA/HISTORY/'+ch,property='Temps.Magnets',depth='2400hours', stop='30.12.2018 13:00:00')
+        time.sleep(0.1)
         data[ch] = {'data':h}
         print('ok')
     except Exception as e:
@@ -35,6 +43,6 @@ data['tags'] = ['petra','archive','history']
 
 #h=pt.history(address='/PETRA/HISTORY/keyword',property='CurDC',depth='2400hours', stop='30.11.2018 13:00:00')
 
-[datetime.utcfromtimestamp(t[1]) for t in h]
+#[datetime.utcfromtimestamp(t[1]) for t in h]
 
-json.dump(data, open('injest.json','w'))
+json.dump(data, open(sys.argv[1],'w'))
