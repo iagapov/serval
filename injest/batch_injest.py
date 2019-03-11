@@ -11,6 +11,6 @@ for i in range(366):
         print('getting data for: ', day_str)
         frame = get_data_frame(day_str,'24hours','')
 
-        json.dump(frame, open(sys.argv[2] + day_str + '.json','w'))
+        json.dump(frame, open(sys.argv[1] + day_str + '.json','w'))
 
     d+=datetime.timedelta(days=1)

@@ -83,6 +83,7 @@ def get_data_frame(date, depth, sampling):
 
     return dataFrame
 
-frame = get_data_frame(sys.argv[1],'24hours','')
-#print(frame)
-json.dump(frame, open(sys.argv[2],'w'))
+if __name__ == "main":
+    frame = get_data_frame(sys.argv[1],'24hours','')
+    #print(frame)
+    json.dump(frame, open(sys.argv[2],'w'))
