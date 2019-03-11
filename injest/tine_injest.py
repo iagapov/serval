@@ -1,15 +1,15 @@
 # read archive channels from tine and prepare .json files to be later injested by the db
-#import PyTine as pt
+import PyTine as pt
 from datetime import datetime
 import json
 import sys
-
+import time
 
 def get_device_list(property):
     d=pt.list(context='PETRA', server='HISTORY', property=property)
     return d['devices']
 
-def get_value(property, device, ,depth, stop):
+def get_value(property, device, depth, stop):
     h=pt.history(address='/PETRA/HISTORY/'+device,property=property, depth=depth, stop=stop)
     return h
 
@@ -57,20 +57,22 @@ def get_data_frame(date, depth, sampling):
     property = 'Temps.Magnets'
     devices = get_device_list(property)
     for dev in devices:
-        h=get_value(propert=property, device=dev, depth=depth, stop=date + ' 13:00:00')
+        h=get_value(property=property, device=dev, depth=depth, stop=date + ' 13:00:00')
         dataFrame['Temperature'][dev] = h
 
     dataFrame['Alignment'] = {}
     property = 'BODENSEGMENTMESSUNG'
     devices = get_device_list(property)
     for dev in devices:
-        h=get_value(propert=property, device=dev, depth=depth, stop=date + ' 13:00:00')
+        time.sleep(0.1)
+        h=get_value(property=property, device=dev, depth=depth, stop=date + ' 13:00:00')
         dataFrame['Alignment'][dev] = h
 
     property = 'BODENPLATTENMESSUNG'
     devices = get_device_list(property)
     for dev in devices:
-        h=get_value(propert=property, device=dev, depth=depth, stop=date + ' 13:00:00')
+        time.sleep(0.1)
+        h=get_value(property=property, device=dev, depth=depth, stop=date + ' 13:00:00')
         dataFrame['Alignment'][dev] = h
 
 
@@ -81,6 +83,6 @@ def get_data_frame(date, depth, sampling):
 
     return dataFrame
 
-frame = get_data_frame('31.12.2018','48hours','')
+frame = get_data_frame(sys.argv[1],'24hours','')
 #print(frame)
-json.dump(dataFrame, open(sys.argv[1],'w'))
+json.dump(frame, open(sys.argv[2],'w'))
